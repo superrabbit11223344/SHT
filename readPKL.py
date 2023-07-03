@@ -1,4 +1,5 @@
 import pickle
+import numpy as np
 
 TRAIN_PATH = 'Data/gowalla/trnMat.pkl'
 TEST_PATH = 'Data/gowalla/tstMat.pkl'
@@ -28,7 +29,7 @@ for i in range(len(trnMat.data)):
 print(f'训练集交互用户数：{len(trnUsers)}')
 print(f'训练集交互商品数：{len(trnItems)}')
 print(f'交互记录数：{len(trnMat.data)}')
-print(trnMat.shape)
+print(f'交互矩阵shape: {trnMat.shape}')
 print()
 
 # 测试集中的user数和item数
@@ -42,10 +43,19 @@ for i in range(len(tstMat.data)):
     tstItems.add(col)
     tstInters.add((row, col))
 
-print(f'测试集交互用户数：{len(tstUsers)}')
-print(f'测试集交互商品数：{len(tstItems)}')
-print(f'交互记录数：{len(tstMat.data)}')
-print(tstMat.shape)
+print(f'测试集交互用户数: {len(tstUsers)}')
+print(f'测试集交互商品数: {len(tstItems)}')
+print(f'交互记录数: {len(tstMat.data)}')
+print(f'交互矩阵shape: {tstMat.shape}')
 
 # 查看训练集中的交互记录trnInters, 和测试集中的交互记录tstInters是否有交集
-assert(trnInters & tstInters == set())
+print('训练集中的交互记录trnInters, 和测试集中的交互记录tstInters是否有交集: ', trnInters & tstInters == set())
+print()
+
+# user id范围，进行了去重和排序操作
+print('训练集user id范围: ', np.unique(np.sort(trnMat.row)))
+print('测试集user id范围: ', np.unique(np.sort(tstMat.row)))
+
+# item id范围，进行了去重和排序操作
+print('训练集item id范围: ', np.unique(np.sort(trnMat.col)))
+print('测试集item id范围: ', np.unique(np.sort(tstMat.col)))
